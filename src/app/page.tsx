@@ -20,6 +20,24 @@ export default function Home() {
           setSubmittedName(productName);
           setSubmittedUrl(productUrl);
           setSubmittedPrice(currentPrice);
+
+          fetch("api/submitDeal", {
+            method: "POST", // Send data to backend
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              name: submittedName,
+              url: submittedUrl,
+              price: submittedPrice
+            }
+            )
+          })
+            .then(response => response.json()) // Converts response into JSON
+            .catch(error => {
+              console.log("Error:", error);
+            })
+
         }
         }>
           <div>
