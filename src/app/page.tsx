@@ -11,10 +11,11 @@ export default function Home() {
   const [submittedUrl, setSubmittedUrl] = useState("")
   const [submittedPrice, setSubmittedPrice] = useState("")
 
+  const [aiMessage, setAiMessage] = useState("") // Holds AI's response
 
   return (
     <div>
-      <p>
+      <div>
         <form onSubmit={(e) => {
           e.preventDefault();
           setSubmittedName(productName);
@@ -27,13 +28,16 @@ export default function Home() {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
-              name: submittedName,
-              url: submittedUrl,
-              price: submittedPrice
+              name: productName,
+              url: productUrl,
+              price: currentPrice
             }
             )
           })
             .then(response => response.json()) // Converts response into JSON
+            .then(data => {
+              setAiMessage(data.message)
+            })
             .catch(error => {
               console.log("Error:", error);
             })
@@ -54,9 +58,10 @@ export default function Home() {
             <p>Product Name: {submittedName} </p>
             <p>Product URL: {submittedUrl}</p>
             <p>Current Price: {submittedPrice} </p>
+            <p>AI Message: {aiMessage}</p>
           </div>
         </form>
-      </p>
+      </div>
     </div>
   );
 }
