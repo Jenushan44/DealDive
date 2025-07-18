@@ -3,20 +3,40 @@ import { useState } from 'react'
 
 export default function Home() {
 
-  const [search, setSearch] = useState("") // Holds current text user is typing
-  const [result, setResult] = useState("") // Holds final submitted value
+  const [productName, setProductName] = useState("") // Holds current text user is typing
+  const [productUrl, setProductUrl] = useState("")
+  const [currentPrice, setCurrentPrice] = useState("")
+
+  const [submittedName, setSubmittedName] = useState("") // Holds final submitted value
+  const [submittedUrl, setSubmittedUrl] = useState("")
+  const [submittedPrice, setSubmittedPrice] = useState("")
+
+
   return (
     <div>
       <p>
         <form onSubmit={(e) => {
           e.preventDefault();
-          setResult(search);
+          setSubmittedName(productName);
+          setSubmittedUrl(productUrl);
+          setSubmittedPrice(currentPrice);
         }
         }>
-          <input type='text' placeholder='Enter text' onChange={(e) => setSearch(e.target.value)}></input>
+          <div>
+            <input type='text' placeholder='Enter Name' onChange={(e) => setProductName(e.target.value)}></input>
+          </div>
+          <div>
+            <input type='text' placeholder='Enter URL' onChange={(e) => setProductUrl(e.target.value)}></input>
+          </div>
+          <div>
+            <input type='text' placeholder='Enter Price' onChange={(e) => setCurrentPrice(e.target.value)}></input>
+          </div>
           <button type='submit'>Submit</button>
-          <p>Product Name: {result} </p>
-
+          <div>
+            <p>Product Name: {submittedName} </p>
+            <p>Product URL: {submittedUrl}</p>
+            <p>Current Price: {submittedPrice} </p>
+          </div>
         </form>
       </p>
     </div>
