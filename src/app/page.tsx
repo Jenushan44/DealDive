@@ -2,17 +2,19 @@
 import { useState } from 'react'
 import PriceHistoryChart from "./components/PriceHistoryChart";
 
+function DateToday() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth()).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  const formatDate = `${year}-${month}-${day}`;
+
+  return { formatDate }
+
+}
 
 export default function Home() {
-
-  const mockData = [
-    { date: "2024-07-01", price: 32.99 },
-    { date: "2024-07-03", price: 37.99 },
-    { date: "2024-07-05", price: 37.99 },
-    { date: "2024-07-07", price: 37.99 },
-    { date: "2024-07-09", price: 37.99 },
-    { date: "2024-07-11", price: 30.99 },
-  ];
 
   const [productName, setProductName] = useState("") // Holds current text user is typing
   const [productUrl, setProductUrl] = useState("")
@@ -24,6 +26,8 @@ export default function Home() {
 
   const [aiMessage, setAiMessage] = useState("") // Holds AI's response
 
+  const [priceHistory, setPriceHistory] = useState<{ date: string; price: number }[]>([])
+
   return (
     <div>
       <div>
@@ -32,7 +36,6 @@ export default function Home() {
           setSubmittedName(productName);
           setSubmittedUrl(productUrl);
           setSubmittedPrice(currentPrice);
-
           fetch("api/submitDeal", {
             method: "POST", // Send data to backend
             headers: {
@@ -47,7 +50,8 @@ export default function Home() {
           })
             .then(response => response.json()) // Converts response into JSON
             .then(data => {
-              setAiMessage(data.message)
+              setAiMessage(data.message),
+                setPriceHistory([...priceHistory, { date: DateToday().formatDate, price: parseFloat(currentPrice) }])
             })
             .catch(error => {
               console.log("Error:", error);
@@ -63,16 +67,17 @@ export default function Home() {
           <div>
             <input type='text' placeholder='Enter Price' onChange={(e) => setCurrentPrice(e.target.value)}></input>
           </div>
-          <button type='submit'>Submit</button>
+          <button type='submit'>Submit</button >
           <div>
             <p>Product Name: {submittedName} </p>
             <p>Product URL: {submittedUrl}</p>
             <p>Current Price: {submittedPrice} </p>
             <p>AI Message: {aiMessage}</p>
+
           </div>
         </form>
       </div>
-      <PriceHistoryChart data={mockData} />
+      <PriceHistoryChart data={priceHistory} />
     </div>
   );
 }
