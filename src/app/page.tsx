@@ -41,7 +41,6 @@ export default function Home() {
             .catch(error => {
               console.log("Error:", error);
             })
-
         }
         }>
           <div>
