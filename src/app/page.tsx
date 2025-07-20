@@ -1,7 +1,18 @@
 "use client"; // Allows components to run in the browser
 import { useState } from 'react'
+import PriceHistoryChart from "./components/PriceHistoryChart";
+
 
 export default function Home() {
+
+  const mockData = [
+    { date: "2024-07-01", price: 32.99 },
+    { date: "2024-07-03", price: 37.99 },
+    { date: "2024-07-05", price: 37.99 },
+    { date: "2024-07-07", price: 37.99 },
+    { date: "2024-07-09", price: 37.99 },
+    { date: "2024-07-11", price: 30.99 },
+  ];
 
   const [productName, setProductName] = useState("") // Holds current text user is typing
   const [productUrl, setProductUrl] = useState("")
@@ -61,6 +72,7 @@ export default function Home() {
           </div>
         </form>
       </div>
+      <PriceHistoryChart data={mockData} />
     </div>
   );
 }

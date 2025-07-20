@@ -8,7 +8,12 @@ type ChartDataPoint = {
 export default function PriceHistoryChart({ data }: { data: ChartDataPoint[] }) {
   return (
     <div>
-      {/*Chart*/}
+      <LineChart data={data} width={400} height={300}>
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Line type="monotone" dataKey="price" stroke="#8884d8" />
+
+      </LineChart>
     </div>
   );
 }
