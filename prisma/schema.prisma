@@ -14,10 +14,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
+model SavedDeal {
   id       String   @id @default(uuid())
   name     String
   price    Float
+  url       String
   createdAt DateTime @default(now())
 }
 

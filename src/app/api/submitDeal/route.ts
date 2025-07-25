@@ -1,3 +1,5 @@
+import prisma from "../../../../lib/prisma";
+
 export async function POST(request: Request) {
   const data = await request.json();
 
@@ -37,4 +39,10 @@ export async function POST(request: Request) {
     status: 200
   })
 
+}
+
+
+export async function GET(request: Request) {
+  const deals = await prisma.product.findMany();
+  return new Response(JSON.stringify(deals), { status: 200 })
 }
